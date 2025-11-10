@@ -30,6 +30,11 @@ nodes:
     timeoutSeconds: 60
 - addnode:
   - miner2
+  - armada-1
+  - armada-2
+  - armada-3
+  - armada-4
+  - armada-5
   config: "maxconnections=1000\nuacomment=armada-0\nrpcauth=forkobserver:1418183465eecbd407010cf60811c6a0$d4e5f0647a63429c218da1302d7f19fe627302aeb0a71a74de55346a25d8057c\nrpcwhitelist=forkobserver:getchaintips,getblockheader,getblockhash,getblock,getnetworkinfo\nrpcwhitelistdefault=0\n "
   global:
     chain: regtest
@@ -38,8 +43,12 @@ nodes:
     tag: 94.0.0-5k-inv
   name: armada-0
 - addnode:
-  - armada-0
   - miner2
+  - armada-0
+  - armada-2
+  - armada-3
+  - armada-4
+  - armada-5
   config: "maxconnections=1000\nuacomment=armada-1\nrpcauth=forkobserver:1418183465eecbd407010cf60811c6a0$d4e5f0647a63429c218da1302d7f19fe627302aeb0a71a74de55346a25d8057c\nrpcwhitelist=forkobserver:getchaintips,getblockheader,getblockhash,getblock,getnetworkinfo\nrpcwhitelistdefault=0\n "
   global:
     chain: regtest
@@ -48,8 +57,12 @@ nodes:
     tag: 95.0.0-disabled-opcodes
   name: armada-1
 - addnode:
-  - armada-1
   - miner2
+  - armada-0
+  - armada-1
+  - armada-3
+  - armada-4
+  - armada-5
   config: "maxconnections=1000\nuacomment=armada-2\nrpcauth=forkobserver:1418183465eecbd407010cf60811c6a0$d4e5f0647a63429c218da1302d7f19fe627302aeb0a71a74de55346a25d8057c\nrpcwhitelist=forkobserver:getchaintips,getblockheader,getblockhash,getblock,getnetworkinfo\nrpcwhitelistdefault=0\n "
   global:
     chain: regtest
@@ -58,8 +71,12 @@ nodes:
     tag: 96.0.0-no-mp-trim
   name: armada-2
 - addnode:
-  - armada-2
   - miner2
+  - armada-0
+  - armada-1
+  - armada-2
+  - armada-4
+  - armada-5
   config: "maxconnections=1000\nuacomment=armada-2\nrpcauth=forkobserver:1418183465eecbd407010cf60811c6a0$d4e5f0647a63429c218da1302d7f19fe627302aeb0a71a74de55346a25d8057c\nrpcwhitelist=forkobserver:getchaintips,getblockheader,getblockhash,getblock,getnetworkinfo\nrpcwhitelistdefault=0\n "
   global:
     chain: regtest
@@ -68,8 +85,12 @@ nodes:
     tag: 97.0.0-50-orphans
   name: armada-3
 - addnode:
-  - armada-3
   - miner2
+  - armada-0
+  - armada-1
+  - armada-2
+  - armada-3
+  - armada-5
   config: "maxconnections=1000\nuacomment=armada-4\nrpcauth=forkobserver:1418183465eecbd407010cf60811c6a0$d4e5f0647a63429c218da1302d7f19fe627302aeb0a71a74de55346a25d8057c\nrpcwhitelist=forkobserver:getchaintips,getblockheader,getblockhash,getblock,getnetworkinfo\nrpcwhitelistdefault=0\n "
   global:
     chain: regtest
@@ -78,8 +99,12 @@ nodes:
     tag: 98.0.0-invalid-blocks
   name: armada-4
 - addnode:
-  - armada-5
   - miner2
+  - armada-0
+  - armada-1
+  - armada-2
+  - armada-3
+  - armada-4
   config: "maxconnections=1000\nuacomment=armada-0\nrpcauth=forkobserver:1418183465eecbd407010cf60811c6a0$d4e5f0647a63429c218da1302d7f19fe627302aeb0a71a74de55346a25d8057c\nrpcwhitelist=forkobserver:getchaintips,getblockheader,getblockhash,getblock,getnetworkinfo\nrpcwhitelistdefault=0\n "
   global:
     chain: regtest
