@@ -21,12 +21,23 @@ class Inv5K(Commander):
         parser.description = (
             "Demonstrate INV attack using a scenario and P2PInterface"
         )
-        parser.usage = "warnet run /path/to/my_first_attack_5kinv.py"
+        parser.usage = "warnet run v94_5k_invs.py --debug"
+
+    def get_node(self) : 
+        for n in self.nodes:
+            try:
+                n.getnetworkinfo()
+                node = n
+                break
+            except Exception as e:
+                continue
+
+        return node
+
 
     # Scenario entrypoint
     def run_test(self):
-        # get context from any node
-        node = self.nodes[0]
+        node = self.get_node()
 
         # We pick a node on the network to attack
         # We know this one is vulnderable to 5k inv messages based on it's subver

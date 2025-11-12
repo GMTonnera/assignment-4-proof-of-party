@@ -32,12 +32,23 @@ class Corn(Commander):
         parser.description = (
             "Demonstrate network reconnaissance using a scenario and P2PInterface"
         )
-        parser.usage = "warnet run /path/to/reconnaissance.py"
+        parser.usage = "warnet run v95_disabled_opcode.py --debug"
+
+    def get_node(self) : 
+        for n in self.nodes:
+            try:
+                n.getnetworkinfo()
+                node = n
+                break
+            except Exception as e:
+                continue
+
+        return node
+
 
     # Scenario entrypoint
     def run_test(self):
-        # Get context from any node
-        node = self.nodes[0]
+        node = self.get_node()
 
         for n in self.nodes:
             try:
@@ -72,7 +83,6 @@ class Corn(Commander):
         self.log.info("Creating first tx")
 
         # FILL ME IN
-        # PERHAPS WITH A FELINE OP_CODE??
         script = CScript([OP_CAT])
 
         p2sh_address = script_to_p2sh(script)
@@ -87,7 +97,6 @@ class Corn(Commander):
                 break
             vout += 1
 
-        self.log.info("Creating spending tx")
         sec_tx = CTransaction()
         sec_tx.vin.append(
             CTxIn(COutPoint(first_tx.sha256, 0), scriptSig=CScript([script]))

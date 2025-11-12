@@ -26,12 +26,26 @@ class InvalidBlock(Commander):
 
     def add_options(self, parser):
         parser.description = "Send an invalid block to a node"
-        parser.usage = "warnet run stub_invalid_block.py --debug"
+        parser.usage = "warnet run  v98_invalid_bloc.py --debug"
+
+    def get_node(self) : 
+        for n in self.nodes:
+            try:
+                n.getnetworkinfo()
+                node = n
+                break
+            except Exception as e:
+                continue
+
+        return node
 
     # Scenario entrypoint
     def run_test(self):
-        # get context from any node
-        node = self.nodes[0]
+        node = self.get_node()
+
+        if node is None:
+            self.log.error("No working nodes found!")
+            return
 
         def get_msg(message):
             if message:
@@ -52,8 +66,8 @@ class InvalidBlock(Commander):
         )()
         attacker.wait_until(lambda: attacker.is_connected, check_connected=False)
 
-        best_block_hash = self.nodes[0].getbestblockhash()
-        best_block = self.nodes[0].getblock(best_block_hash)
+        best_block_hash = node.getbestblockhash()
+        best_block = node.getblock(best_block_hash)
         best_block_time = best_block["time"]
         coinbase = create_coinbase(height=123)
         new_block = create_block(
@@ -70,11 +84,11 @@ class InvalidBlock(Commander):
 
         try:
             ping = msg_ping()
-            while attacker.ping_counter < 5:
-                time.sleep(3)
-                self.log.info(f"Ping: {attacker.ping_counter}")
+            ping_count = 0
+            while ping_count < 10:
+                self.log.info(f"Ping: {ping_count + 1}")
                 attacker.send_message(ping)
-            self.log.info("The attack ended unsuccessfully!")
+                ping_count += 1
 
         except:
             self.log.info(f"It was not possible to communicate with {victim}!")
