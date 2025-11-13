@@ -59,17 +59,26 @@ class Orphan50(Commander):
 
         # This scenario requires the nodes to not be in IBD
         self.log.info("Starting orphan scenario")
-        # create wallet miner, might already exist
+        
+        # Try to use the armada wallet first, then miner, then create one
+        wallet_node = None
         try:
-            node.createwallet("miner", False, None, None, False, True, False)
+            wallet_node = node.get_wallet_rpc("armada")
+            self.log.info("Using armada wallet")
         except:
-            pass
-        try:
-            node.loadwallet("miner")
-        except:
-            pass
+            try:
+                wallet_node = node.get_wallet_rpc("miner")
+                self.log.info("Using miner wallet")
+            except:
+                try:
+                    node.createwallet("miner", False, None, None, False, True, False)
+                    wallet_node = node.get_wallet_rpc("miner")
+                    self.log.info("Created and using miner wallet")
+                except Exception as e:
+                    self.log.error(f"Failed to get wallet: {e}")
+                    wallet_node = node
 
-        victim = "armada-3"
+        victim = "tank-0113-sapphire.default.svc"
 
         # The victim's address could be an explicit IP address
         # OR a kubernetes hostname (use default chain p2p port)
@@ -105,7 +114,7 @@ class Orphan50(Commander):
                 )
             )
             tx.vout.append(
-                CTxOut(int(0.00009 * COIN), address_to_scriptpubkey(node.getnewaddress()))
+                CTxOut(int(0.00009 * COIN), address_to_scriptpubkey(wallet_node.getnewaddress()))
             )
 
             tx.calc_sha256()

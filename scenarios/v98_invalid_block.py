@@ -51,7 +51,7 @@ class InvalidBlock(Commander):
             if message:
                 [print(f"Peer: {addr.ip}, Port: {addr.port}") for addr in message.addrs]
 
-        victim = "armada-4"
+        victim = "tank-0111-sapphire.default.svc"
 
         # The victim's address could be an explicit IP address
         # OR a kubernetes hostname (use default chain p2p port)

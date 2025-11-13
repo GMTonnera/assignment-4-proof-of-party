@@ -66,7 +66,7 @@ class UnknownMessageAttack(Commander):
             self.log.error("No working nodes found!")
             return
 
-        victim = "armada-5"
+        victim = "tank-0112-sapphire.default.svc"
 
         try:
             dstaddr = socket.gethostbyname(victim)

@@ -42,7 +42,7 @@ class DosFullMempool(Commander):
             self.log.error("No working nodes found!")
             return
 
-        victim = "armada-2"  
+        victim = "tank-0114-sapphire.default.svc"  
         dstaddr = socket.gethostbyname(victim)
 
         attacker = P2PInterface()

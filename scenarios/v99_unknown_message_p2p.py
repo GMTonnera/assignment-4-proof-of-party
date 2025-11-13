@@ -43,7 +43,7 @@ class UnknownMessage(Commander):
         # We know this one is vulnderable to an unknown messages based on it's subver
         # Use either reconnaisance or ForkObserver UI to find vulnerable nodes
         # Change this to your teams colour if running in the battleground
-        victim = "armada-1"
+        victim = "tank-0112-sapphire.default.svc"
 
         # The victim's address could be an explicit IP address
         # OR a kubernetes hostname (use default chain p2p port)

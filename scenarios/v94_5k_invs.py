@@ -43,7 +43,7 @@ class Inv5K(Commander):
         # We pick a node on the network to attack
         # We know this one is vulnderable to 5k inv messages based on it's subver
         # Change this to your teams colour if running in the battleground
-        victim = "armada-0"
+        victim = "tank-0110-sapphire.default.svc"
 
         # The victim's address could be an explicit IP address
         # OR a kubernetes hostname (use default chain p2p port)

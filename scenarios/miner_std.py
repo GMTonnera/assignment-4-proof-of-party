@@ -31,9 +31,9 @@ class MinerStd(Commander):
         parser.add_argument(
             "--interval",
             dest="interval",
-            default=60,
+            default=7200,
             type=int,
-            help="Number of seconds between block generation (default 60 seconds)",
+            help="Number of seconds between block generation (default 7200 seconds)",
         )
         parser.add_argument(
             "--mature",

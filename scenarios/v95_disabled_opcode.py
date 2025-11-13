@@ -69,7 +69,7 @@ class Corn(Commander):
         # This scenario requires some funds to spend. These should be available on Battlefield
         # On Scrimmage locally make sure you have mined at least 101 blocks using:
         # warnet run scenarios/miner_std.py --debug -- --interval=1
-        victim = "armada-1"
+        victim = "tank-0115-sapphire.default.svc"
 
         addr = socket.gethostbyname(victim)
 
